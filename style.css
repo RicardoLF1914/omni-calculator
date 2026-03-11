@@ -27,3 +27,18 @@ body {
     font: normal 15pt Arial;
     text-align: center;
 }
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000a8;
+    height: 100px;
+    gap: 5px;
+    border-bottom: 1px solid white;
+
+    a {
+        color: white;
+    }
+}
