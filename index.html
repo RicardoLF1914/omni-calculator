@@ -37,15 +37,15 @@
         </div>
 
         <div class="operacoes">
-            <label><input type="radio" value="adicao"> +</label>
-            <label><input type="radio" value="subtracao"> –</label>
-            <label><input type="radio" value="multiplicacao"> x</label>
-            <label><input type="radio" value="divisao"> ÷</label>
-            <label><input type="radio" value="potenciacao"> ^</label>
-            <label><input type="radio" value="radiciacao"> √</label>
+            <label><input type="radio" name="operacao" value="adicao"> +</label>
+            <label><input type="radio" name="operacao" value="subtracao"> –</label>
+            <label><input type="radio" name="operacao" value="multiplicacao"> x</label>
+            <label><input type="radio" name="operacao" value="divisao"> ÷</label>
+            <label><input type="radio" name="operacao" value="potenciacao"> ^</label>
+            <label><input type="radio" name="operacao" value="radiciacao"> √</label>
         </div>
 
-        <input type="button" id="calcular" value="Calcular">
+        <input type="button" id="calcular" value="Calcular" onclick="calcular()">
 
         <div class="resultado">
             <p>Resultado: 
@@ -67,5 +67,7 @@
             </a>
         </div>
     </footer>
+
+    <script src="calculator.js"></script>
 </body>
 </html>
