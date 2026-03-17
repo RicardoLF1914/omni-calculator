@@ -32,15 +32,15 @@
         </div>
 
         <div class="operacoes">
-            <label><input type="radio" value="seno"> sin</label>
-            <label><input type="radio" value="cosseno"> cos</label>
-            <label><input type="radio" value="tangente"> tan</label>
-            <label><input type="radio" value="logaritmo"> log</label>
-            <label><input type="radio" value="absoluto"> abs</label>
-            <label><input type="radio" value="logN"> ln</label>
+            <label><input type="radio" name="operacao" value="seno"> sin</label>
+            <label><input type="radio" name="operacao" value="cosseno"> cos</label>
+            <label><input type="radio" name="operacao" value="tangente"> tan</label>
+            <label><input type="radio" name="operacao" value="logaritmo"> log</label>
+            <label><input type="radio" name="operacao" value="absoluto"> abs</label>
+            <label><input type="radio" name="operacao" value="logN"> ln</label>
         </div>
 
-        <input type="button" id="calcular" value="Calcular">
+        <input type="button" id="calcular" value="Calcular" onclick="calcular()">
 
         <div class="resultado">
             <p>Resultado: 
@@ -62,5 +62,7 @@
             </a>
         </div>
     </footer>
+
+    <script src="scientific.js"></script>
 </body>
 </html>
