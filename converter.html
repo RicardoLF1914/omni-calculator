@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,8 +24,47 @@
         </div>
     </header>
 
-    <main>
-        
+    <main class="converter-main">
+        <div class="categorias">
+            <select id="categoria" onchange="atualizarUnidades()">
+                <option value="comprimento">📏 Comprimento</option>
+                <option value="massa">⚖️ Massa</option>
+                <option value="temperatura">🌡️ Temperatura</option>
+                <option value="area">⬛ Área</option>
+                <option value="volume">🧊 Volume</option>
+                <option value="velocidade">💨 Velocidade</option>
+                <option value="tempo">⏱️ Tempo</option>
+            </select>
+        </div>
+ 
+        <div class="converter-inputs">
+            <div class="converter-field">
+                <label for="valor">Valor</label>
+                <input type="number" id="valor" placeholder="0">
+            </div>
+ 
+            <div class="converter-selects">
+                <div class="select-group">
+                    <label for="de">De</label>
+                    <select id="de"></select>
+                </div>
+ 
+                <button class="swap-btn" onclick="swap()" title="Trocar unidades">⇄</button>
+ 
+                <div class="select-group">
+                    <label for="para">Para</label>
+                    <select id="para"></select>
+                </div>
+            </div>
+        </div>
+ 
+        <input type="button" id="calcular" value="Converter" onclick="converter()">
+ 
+        <div class="resultado">
+            <p>Resultado: 
+                <span>-</span>
+            </p>
+        </div>
     </main>
 
     <footer>
