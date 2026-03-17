@@ -50,5 +50,3 @@ function calcular() {
 
     resultbox.innerHTML = parseFloat(resultado.toFixed(10));
 }
-
-document.getElementById('calcular').addEventListener('click', calcular);
