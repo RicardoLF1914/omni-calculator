@@ -54,7 +54,7 @@ main {
     border-radius: 10px;
     gap: 15px;
     padding: 20px;
-    width: 400px;
+    width: 440px;
     margin: auto;
     box-shadow: 5px 5px 10px #0000005d;
 
@@ -84,11 +84,14 @@ main {
     .operacoes {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 10px;
         flex-wrap: wrap;
 
         .btn {
-            padding: 12px 16px;
+            width: 58px;
+            height: 44px;
+            padding: 0;
             font-size: 18px;
             font-weight: bold;
             border: 2px solid #ccc;
@@ -97,6 +100,9 @@ main {
             color: #333;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             &:hover {
                 border-color: #101011;
@@ -112,7 +118,6 @@ main {
             background-color: #ff9500;
             color: white;
             border-color: #ff9500;
-            min-width: 50px;
 
             &:hover {
                 background-color: #ffb143;
@@ -124,7 +129,6 @@ main {
             background-color: #101011f3;
             color: white;
             border-color: #101011f3;
-            min-width: 50px;
 
             &:hover {
                 background-color: #6c6c6ef3;
@@ -136,7 +140,107 @@ main {
             background-color: #e74c3c;
             color: white;
             border-color: #e74c3c;
-            min-width: 50px;
+
+            &:hover {
+                background-color: #ff6b5b;
+                border-color: #ff6b5b;
+            }
+        }
+    }
+
+    .operacoes-cientificas {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: nowrap;
+
+        .btn {
+            width: 58px;
+            height: 44px;
+            padding: 0;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                border-color: #101011;
+                background-color: #e8e8e8;
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+
+        .operacao-cientifica {
+            background-color: #6c5ce7;
+            color: white;
+            border-color: #6c5ce7;
+
+            &:hover {
+                background-color: #8b7cfb;
+                border-color: #8b7cfb;
+            }
+        }
+    }
+
+    .operacoes-finais {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        .btn {
+            width: 58px;
+            height: 44px;
+            padding: 0;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                border-color: #101011;
+                background-color: #e8e8e8;
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+
+        #calcular {
+            background-color: #101011f3;
+            color: white;
+            border-color: #101011f3;
+
+            &:hover {
+                background-color: #6c6c6ef3;
+                border-color: #6c6c6ef3;
+            }
+        }
+
+        #limpar {
+            background-color: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
 
             &:hover {
                 background-color: #ff6b5b;

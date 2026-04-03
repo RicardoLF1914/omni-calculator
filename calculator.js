@@ -11,6 +11,15 @@ const operadores = {
     'radiciacao': '√'
 };
 
+const operacoesCientificas = {
+    'seno': 'sin',
+    'cosseno': 'cos',
+    'tangente': 'tan',
+    'logaritmo': 'log',
+    'logN': 'ln',
+    'absoluto': 'abs'
+};
+
 function atualizarDisplay() {
     document.getElementById('display').innerHTML = expressao;
 }
@@ -166,19 +175,65 @@ function adicionarNumeroNegativo() {
 }
 
 function avaliarExpressao(expr) {
-    // Converte símbolos especiais para operadores JavaScript
-    let exprFormatada = expr
-        .replace(/−/g, '-')
-        .replace(/×/g, '*')
-        .replace(/÷/g, '/')
-        .replace(/√/g, 'Math.sqrt');
-    
-    // Tratar radiciação na forma √(base)
-    // Substituir números após √ por Math.sqrt()
-    exprFormatada = exprFormatada.replace(/Math\.sqrt(\d+\.?\d*)/g, 'Math.sqrt($1)');
-    
     try {
-        let resultado = eval(exprFormatada);
+        // Primeira, processa as funções científicas
+        let exprProcessada = expr;
+        
+        // Processa sin, cos, tan
+        exprProcessada = exprProcessada.replace(/sin\(([^)]+)\)/g, function(match, p1) {
+            const n = parseFloat(p1);
+            return isNaN(n) ? 0 : Math.sin(n * (Math.PI / 180));
+        });
+        
+        exprProcessada = exprProcessada.replace(/cos\(([^)]+)\)/g, function(match, p1) {
+            const n = parseFloat(p1);
+            return isNaN(n) ? 0 : Math.cos(n * (Math.PI / 180));
+        });
+        
+        exprProcessada = exprProcessada.replace(/tan\(([^)]+)\)/g, function(match, p1) {
+            const n = parseFloat(p1);
+            if (isNaN(n)) return 0;
+            if (n % 180 === 90) {
+                alert("Tangente indefinida para esse ângulo!");
+                return NaN;
+            }
+            return Math.tan(n * (Math.PI / 180));
+        });
+        
+        exprProcessada = exprProcessada.replace(/log\(([^)]+)\)/g, function(match, p1) {
+            const n = parseFloat(p1);
+            if (isNaN(n)) return 0;
+            if (n <= 0) {
+                alert("Logaritmo indefinido para valores ≤ 0!");
+                return NaN;
+            }
+            return Math.log10(n);
+        });
+        
+        exprProcessada = exprProcessada.replace(/ln\(([^)]+)\)/g, function(match, p1) {
+            const n = parseFloat(p1);
+            if (isNaN(n)) return 0;
+            if (n <= 0) {
+                alert("Logaritmo natural indefinido para valores ≤ 0!");
+                return NaN;
+            }
+            return Math.log(n);
+        });
+        
+        exprProcessada = exprProcessada.replace(/abs\(([^)]+)\)/g, function(match, p1) {
+            const n = parseFloat(p1);
+            return isNaN(n) ? 0 : Math.abs(n);
+        });
+        
+        // Agora converte para operações matemáticas padrão
+        let exprFinal = exprProcessada
+            .replace(/−/g, '-')
+            .replace(/×/g, '*')
+            .replace(/÷/g, '/')
+            .replace(/√/g, 'Math.sqrt');
+        
+        // Avalia a expressão
+        const resultado = eval(exprFinal);
         return resultado;
     } catch (e) {
         return null;
@@ -195,6 +250,26 @@ function calcular() {
     
     expressao = parseFloat(resultado.toFixed(10)).toString();
     numeroAtual = expressao;
+    novoNumero = true;
+    atualizarDisplay();
+}
+
+function adicionarOperacaoCientifica(op) {
+    // Aplica a função ao número atual e envolve em parênteses
+    if (!novoNumero) {
+        // Estava digitando um número, aplica a função a ele
+        numeroAtual = operacoesCientificas[op] + '(' + numeroAtual + ')';
+        expressao = numeroAtual;
+    } else if (/[+−×÷^(]$/.test(expressao) || expressao === '0') {
+        // Expressão termina com operador ou está vazia, aplica função ao 0
+        numeroAtual = operacoesCientificas[op] + '(0)';
+        expressao = /[+−×÷^(]$/.test(expressao) ? expressao + numeroAtual : numeroAtual;
+    } else {
+        // Substitui a expressão inteira com a função aplicada
+        numeroAtual = operacoesCientificas[op] + '(' + expressao + ')';
+        expressao = numeroAtual;
+    }
+    
     novoNumero = true;
     atualizarDisplay();
 }
@@ -253,6 +328,13 @@ function apagarUltimo() {
 document.querySelectorAll('.operacao').forEach(btn => {
     btn.addEventListener('click', function() {
         adicionarOperacao(this.dataset.operacao);
+    });
+});
+
+// Event listeners para botões de operações científicas
+document.querySelectorAll('.operacao-cientifica').forEach(btn => {
+    btn.addEventListener('click', function() {
+        adicionarOperacaoCientifica(this.dataset.operacao);
     });
 });
 
