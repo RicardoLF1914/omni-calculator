@@ -25,34 +25,22 @@
     </header>
 
     <main>
-        <div class="numeros">
-            <div class="calc-field">
-                <label for="n1">Valor 1</label>
-                <input type="number" id="n1">
-            </div>
- 
-            <div class="calc-field">
-                <label for="n2">Valor 2</label>
-                <input type="number" id="n2">
-            </div>
+        <div class="resultado">
+            <p id="display">0</p>
         </div>
 
         <div class="operacoes">
-            <label><input type="radio" name="operacao" value="adicao"> +</label>
-            <label><input type="radio" name="operacao" value="subtracao"> –</label>
-            <label><input type="radio" name="operacao" value="multiplicacao"> x</label>
-            <label><input type="radio" name="operacao" value="divisao"> ÷</label>
-            <label><input type="radio" name="operacao" value="potenciacao"> ^</label>
-            <label><input type="radio" name="operacao" value="radiciacao"> √</label>
+            <button class="btn operacao" data-operacao="adicao">+</button>
+            <button class="btn operacao" data-operacao="subtracao">−</button>
+            <button class="btn operacao" data-operacao="multiplicacao">x</button>
+            <button class="btn operacao" data-operacao="divisao">÷</button>
+            <button class="btn operacao" data-operacao="potenciacao">^</button>
+            <button class="btn operacao" data-operacao="radiciacao">√</button>
+            <button class="btn" id="calcular">=</button>
+            <button class="btn" id="limpar">C</button>
         </div>
 
-        <input type="button" id="calcular" value="Calcular" onclick="calcular()">
-
-        <div class="resultado">
-            <p>Resultado: 
-                <span>-</span>
-            </p>
-        </div>
+        <p class="instrucoes">Digite os números usando o teclado</p>
     </main>
 
     <footer>

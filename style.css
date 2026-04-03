@@ -52,109 +52,104 @@ main {
     background-color: white;
     color: black;
     border-radius: 10px;
-    gap: 20px;
-    padding: 15px;
-    width: 500px;
+    gap: 15px;
+    padding: 20px;
+    width: 400px;
     margin: auto;
     box-shadow: 5px 5px 10px #0000005d;
 
-    .numeros {
+    .resultado {
+        background-color: #1a1a1a;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        padding: 15px 20px;
+        font-size: 28px;
+        font-weight: bold;
+        color: white;
+        text-align: right;
+        word-wrap: break-word;
+        word-break: break-all;
+        min-height: 50px;
         display: flex;
-        justify-content: space-around;
+        align-items: center;
+        justify-content: flex-end;
+        font-family: monospace;
 
-        .calc-field {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
- 
-            label {
-                font-size: 13px;
-                color: #333;
-                font-weight: 600;
-                text-align: left;
-                padding-left: 2px;
-            }
-
-            input {
-                border: 2px solid #ccc;
-                border-radius: 8px;
-                padding: 8px 12px;
-                font-size: 16px;
-                width: 160px;
-                outline: none;
-                transition: border-color 0.2s;
-
-                &:focus {
-                    border-color: #101011;
-                }
-            }
+        p {
+            margin: 0;
+            width: 100%;
         }
     }
 
     .operacoes {
         display: flex;
-        justify-content: space-around;
-        gap: 8px;
+        justify-content: center;
+        gap: 10px;
         flex-wrap: wrap;
 
-        label {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            width: 44px;
-            height: 44px;
-            border-radius: 8px;
-            border: 2px solid #ccc;
+        .btn {
+            padding: 12px 16px;
             font-size: 18px;
-            color: #555;
+            font-weight: bold;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+            color: #333;
+            cursor: pointer;
             transition: all 0.2s ease;
-            
-            input[type="radio"] {
-                display: none;
-            }
-            
+
             &:hover {
                 border-color: #101011;
-                color: #101011;
+                background-color: #e8e8e8;
+            }
+
+            &:active {
+                transform: scale(0.95);
             }
         }
 
-        label:has(input[type="radio"]:checked) {
-            background-color: #101011;
-            border-color: #101011;
+        .operacao {
+            background-color: #ff9500;
             color: white;
+            border-color: #ff9500;
+            min-width: 50px;
+
+            &:hover {
+                background-color: #ffb143;
+                border-color: #ffb143;
+            }
+        }
+
+        #calcular {
+            background-color: #101011f3;
+            color: white;
+            border-color: #101011f3;
+            min-width: 50px;
+
+            &:hover {
+                background-color: #6c6c6ef3;
+                border-color: #6c6c6ef3;
+            }
+        }
+
+        #limpar {
+            background-color: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+            min-width: 50px;
+
+            &:hover {
+                background-color: #ff6b5b;
+                border-color: #ff6b5b;
+            }
         }
     }
 
-    #calcular {
-        background-color: #101011f3;
-        color: white;
-        border-radius: 10px;
-        width: auto;
-        padding: 10px 24px;
-        height: 40px;
-        font-size: 16px;
-        box-shadow: 5px 5px 10px #0000005d;
-        align-self: center;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    #calcular:hover {
-        background-color: #6c6c6ef3;
-    }
-
-    .resultado {
-        background-color: #f5f5f5;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        padding: 10px 20px;
-        font-size: 18px;
-        align-self: center;
-        width: 80%;
+    .instrucoes {
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        margin: 0;
     }
 }
 
