@@ -34,14 +34,20 @@ function adicionarDigito(digito) {
     }
     
     // Atualizar expressão com o novo número
-    // Se há um operador na expressão, mantém tudo e apenas atualiza o número após o último operador
-    const ultimoOpIndex = expressao.search(/[+−×÷^](?=[^+−×÷^]*$)/);
+    const ultimoParenIndex = expressao.lastIndexOf('(');
+    const ultimoOpIndex = Math.max(
+        expressao.lastIndexOf('+'),
+        expressao.lastIndexOf('−'),
+        expressao.lastIndexOf('×'),
+        expressao.lastIndexOf('÷'),
+        expressao.lastIndexOf('^')
+    );
     
-    if (ultimoOpIndex !== -1) {
-        // Há um operador, então substituir apenas o número após o operador
-        expressao = expressao.substring(0, ultimoOpIndex + 1) + numeroAtual;
+    const ultimaAcaoIndex = Math.max(ultimoParenIndex, ultimoOpIndex);
+    
+    if (ultimaAcaoIndex !== -1) {
+        expressao = expressao.substring(0, ultimaAcaoIndex + 1) + numeroAtual;
     } else {
-        // Sem operador, é só o número atual
         expressao = numeroAtual;
     }
     atualizarDisplay();
@@ -122,11 +128,72 @@ function adicionarOperacao(operacao) {
     atualizarDisplay();
 }
 
-function calcular() {
-    while (/[+−×÷^]/.test(expressao)) {
-        const resultado = executarOperacao();
-        if (resultado === null) return;
+function adicionarParentese(tipo) {
+    if (tipo === '(') {
+        // Abre parêntese
+        if (/[0-9.]$/.test(expressao)) {
+            // Se termina com número, adiciona multiplicação implícita
+            expressao += '×(';
+        } else {
+            expressao += '(';
+        }
+        numeroAtual = '0';
+        novoNumero = true;
+    } else {
+        // Fecha parêntese
+        if (/[+−×÷^(]$/.test(expressao)) {
+            // Não permite `)` logo após operador ou `(`
+            return;
+        }
+        expressao += ')';
+        novoNumero = true;
     }
+    atualizarDisplay();
+}
+
+function adicionarNumeroNegativo() {
+    // Verifica se é apropriado adicionar um sinal negativo
+    if (/[+−×÷^(]$/.test(expressao) || expressao === '0') {
+        // É sinal negativo
+        numeroAtual = '-';
+        expressao = /[+−×÷^(]$/.test(expressao) ? expressao + '-' : '-';
+        novoNumero = false;
+    } else {
+        // É operador de subtração
+        adicionarOperacao('subtracao');
+    }
+    atualizarDisplay();
+}
+
+function avaliarExpressao(expr) {
+    // Converte símbolos especiais para operadores JavaScript
+    let exprFormatada = expr
+        .replace(/−/g, '-')
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/√/g, 'Math.sqrt');
+    
+    // Tratar radiciação na forma √(base)
+    // Substituir números após √ por Math.sqrt()
+    exprFormatada = exprFormatada.replace(/Math\.sqrt(\d+\.?\d*)/g, 'Math.sqrt($1)');
+    
+    try {
+        let resultado = eval(exprFormatada);
+        return resultado;
+    } catch (e) {
+        return null;
+    }
+}
+
+function calcular() {
+    const resultado = avaliarExpressao(expressao);
+    
+    if (resultado === null || isNaN(resultado)) {
+        alert("Expressão inválida!");
+        return;
+    }
+    
+    expressao = parseFloat(resultado.toFixed(10)).toString();
     numeroAtual = expressao;
     novoNumero = true;
     atualizarDisplay();
@@ -140,23 +207,45 @@ function limpar() {
 }
 
 function apagarUltimo() {
-    if (!novoNumero && /[0-9.]+$/.test(expressao)) {
-        // Se estamos digitando número, apaga o último dígito
-        numeroAtual = numeroAtual.slice(0, -1) || '0';
-        
-        // Se há operador na expressão, mantém tudo até o operador e atualiza número
-        const lastOpIndex = expressao.search(/[+−×÷^](?=[0-9.]+$)/);
-        if (lastOpIndex !== -1) {
-            expressao = expressao.substring(0, lastOpIndex + 1) + numeroAtual;
-        } else {
-            expressao = numeroAtual;
-        }
-    } else if (/[+−×÷^]$/.test(expressao)) {
-        // Se o último caractere é um operador, remove
-        expressao = expressao.slice(0, -1);
+    if (expressao === '0' || expressao === '-' || expressao === '') {
+        // Não apaga se é o valor inicial
+        return;
+    }
+    
+    // Remove o último caractere
+    expressao = expressao.slice(0, -1);
+    
+    if (expressao === '' || expressao === '-') {
+        expressao = '0';
         numeroAtual = '0';
         novoNumero = false;
+    } else {
+        // Atualiza numeroAtual baseado no novo estado da expressão
+        const ultimoParenIndex = expressao.lastIndexOf('(');
+        const ultimoOpIndex = Math.max(
+            expressao.lastIndexOf('+'),
+            expressao.lastIndexOf('−'),
+            expressao.lastIndexOf('×'),
+            expressao.lastIndexOf('÷'),
+            expressao.lastIndexOf('^')
+        );
+        
+        const ultimaAcaoIndex = Math.max(ultimoParenIndex, ultimoOpIndex);
+        
+        if (ultimaAcaoIndex !== -1) {
+            numeroAtual = expressao.substring(ultimaAcaoIndex + 1);
+        } else {
+            numeroAtual = expressao;
+        }
+        
+        // Se termina com operador ou parêntese, está pronto para novo número
+        if (/[+−×÷^(]$/.test(expressao)) {
+            novoNumero = true;
+        } else {
+            novoNumero = false;
+        }
     }
+    
     atualizarDisplay();
 }
 
@@ -188,7 +277,7 @@ document.addEventListener('keydown', function(event) {
         adicionarOperacao('adicao');
     }
     else if (key === '-') {
-        adicionarOperacao('subtracao');
+        adicionarNumeroNegativo();
     }
     else if (key === '*') {
         adicionarOperacao('multiplicacao');
@@ -199,6 +288,13 @@ document.addEventListener('keydown', function(event) {
     }
     else if (key === '^') {
         adicionarOperacao('potenciacao');
+    }
+    // Parênteses
+    else if (key === '(') {
+        adicionarParentese('(');
+    }
+    else if (key === ')') {
+        adicionarParentese(')');
     }
     // Enter para calcular
     else if (key === 'Enter' || key === '=') {
