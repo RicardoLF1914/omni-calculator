@@ -118,7 +118,7 @@ main {
         font-size: 28px;
         font-weight: bold;
         color: white;
-        text-align: right;
+        text-align: center;
         word-wrap: break-word;
         word-break: break-all;
         min-height: 50px;
@@ -174,28 +174,6 @@ main {
             &:hover {
                 background-color: #ffb143;
                 border-color: #ffb143;
-            }
-        }
-
-        #calcular {
-            background-color: #101011f3;
-            color: white;
-            border-color: #101011f3;
-
-            &:hover {
-                background-color: #6c6c6ef3;
-                border-color: #6c6c6ef3;
-            }
-        }
-
-        #limpar {
-            background-color: #e74c3c;
-            color: white;
-            border-color: #e74c3c;
-
-            &:hover {
-                background-color: #ff6b5b;
-                border-color: #ff6b5b;
             }
         }
     }
@@ -312,9 +290,21 @@ main {
 .converter-main {
     width: 540px;
 
-    #calcular {
+    #converter {
         width: auto;
         padding: 10px 24px;
+        font-weight: bold;
+        background-color: #101011f3;
+        color: white;
+        border-color: #101011f3;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: #6c6c6ef3;
+            border-color: #6c6c6ef3;
+        }
     }
 }
  
