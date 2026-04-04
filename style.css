@@ -127,7 +127,7 @@ main {
         justify-content: flex-end;
         font-family: monospace;
 
-        p {
+        span {
             margin: 0;
             width: 100%;
         }
