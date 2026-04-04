@@ -108,7 +108,8 @@ function converter() {
 
     const formatado = parseFloat(resultado.toPrecision(10)).toString();
     const unidadePara = unidades[categoria].find(u => u.value === paraVal).label;
-    span.textContent = `${formatado} ${unidadePara.split(" ")[0]}`;
+    const simbolo = unidadePara.match(/\(([^)]+)\)/)?.[1] ?? unidadePara;
+    span.textContent = `${formatado} ${simbolo}`;
 }
 
 function converterTemperatura(valor, de, para) {
