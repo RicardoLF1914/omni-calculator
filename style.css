@@ -34,15 +34,67 @@ body {
 header {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     background-color: #000000a8;
-    height: 100px;
-    gap: 5px;
+    gap: 0;
     border-bottom: 1px solid white;
+
+    h1 {
+        padding: 15px 0;
+        margin: 0;
+        text-align: center;
+    }
 
     a {
         color: white;
+    }
+}
+
+.navigation {
+    display: flex;
+    justify-content: stretch;
+    justify-content: center;
+    width: 100%;
+    
+    nav {
+        display: flex;
+        width: 40%;
+        align-items: stretch;
+        gap: 0;
+
+        a {
+            flex: 1;
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 12px 20px;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            position: relative;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.15);
+            }
+
+            &.active {
+                background-color: rgba(255, 153, 0, 0.8);
+                font-weight: 700;
+            }
+        }
+
+        .nav-left {
+            border-right: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-right {
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+        }
     }
 }
 
@@ -382,6 +434,48 @@ main {
         background-color: #101011;
         border-color: #101011;
         color: white;
+    }
+}
+
+.tab-nav {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border-bottom: 2px solid #ddd;
+    justify-content: center;
+
+    .tab-btn {
+        padding: 10px 20px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        background-color: white;
+        color: #333;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            border-color: #101011;
+            background-color: #f0f0f0;
+        }
+
+        &.active {
+            background-color: #101011;
+            color: white;
+            border-color: #101011;
+        }
+    }
+}
+
+.tab-content {
+    display: none;
+
+    &.active {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 }
 
