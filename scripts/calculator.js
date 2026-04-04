@@ -439,28 +439,35 @@ modal.addEventListener('click', function (e) {
 // ── Teclado virtual (mobile) ──────────────────────────────
 const tecladoMobile = document.getElementById('teclado-mobile');
 
-// Abre o teclado ao tocar no display ou nos botões
 document.querySelector('main').addEventListener('click', () => {
     tecladoMobile.focus();
 });
 
-// Captura o que foi digitado e processa caractere a caractere
+// Valor sentinela: o campo nunca fica realmente vazio
+tecladoMobile.value = ' ';
+
 tecladoMobile.addEventListener('input', function () {
     const valor = this.value;
-    if (!valor) return;
 
-    const ultimo = valor[valor.length - 1];
+    // Se o campo ficou vazio, o usuário pressionou Backspace
+    if (!valor.trim()) {
+        apagarUltimo();
+        this.value = ' ';
+        return;
+    }
 
-    if (/[0-9]/.test(ultimo))        adicionarDigito(ultimo);
-    else if (ultimo === '.')         adicionarDigito('.');
-    else if (ultimo === '+')         adicionarOperacao('adicao');
-    else if (ultimo === '-')         adicionarNumeroNegativo();
-    else if (ultimo === '*')         adicionarOperacao('multiplicacao');
-    else if (ultimo === '/')         adicionarOperacao('divisao');
-    else if (ultimo === '^')         adicionarOperacao('potenciacao');
-    else if (ultimo === '(')         adicionarParentese('(');
-    else if (ultimo === ')')         adicionarParentese(')');
+    const ultimo = valor.trim()[valor.trim().length - 1];
+
+    if (/[0-9]/.test(ultimo))             adicionarDigito(ultimo);
+    else if (ultimo === '.')              adicionarDigito('.');
+    else if (ultimo === '+')             adicionarOperacao('adicao');
+    else if (ultimo === '-')             adicionarNumeroNegativo();
+    else if (ultimo === '*')             adicionarOperacao('multiplicacao');
+    else if (ultimo === '/')             adicionarOperacao('divisao');
+    else if (ultimo === '^')             adicionarOperacao('potenciacao');
+    else if (ultimo === '(')             adicionarParentese('(');
+    else if (ultimo === ')')             adicionarParentese(')');
     else if (ultimo === '=' || ultimo === '\n') calcular();
 
-    this.value = ''; // limpa o campo para aceitar o próximo caractere
+    this.value = ' '; // reseta para o sentinela
 });
