@@ -351,6 +351,8 @@ document.getElementById('limpar').addEventListener('click', limpar);
 
 // Event listener para teclado
 document.addEventListener('keydown', function(event) {
+    if (document.activeElement === tecladoMobile) return;
+
     const key = event.key;
     
     // Números (0-9)
@@ -432,4 +434,33 @@ document.getElementById('limpar-historico').addEventListener('click', function (
 
 modal.addEventListener('click', function (e) {
     if (e.target === modal) modal.classList.remove('aberto');
+});
+
+// ── Teclado virtual (mobile) ──────────────────────────────
+const tecladoMobile = document.getElementById('teclado-mobile');
+
+// Abre o teclado ao tocar no display ou nos botões
+document.querySelector('main').addEventListener('click', () => {
+    tecladoMobile.focus();
+});
+
+// Captura o que foi digitado e processa caractere a caractere
+tecladoMobile.addEventListener('input', function () {
+    const valor = this.value;
+    if (!valor) return;
+
+    const ultimo = valor[valor.length - 1];
+
+    if (/[0-9]/.test(ultimo))        adicionarDigito(ultimo);
+    else if (ultimo === '.')         adicionarDigito('.');
+    else if (ultimo === '+')         adicionarOperacao('adicao');
+    else if (ultimo === '-')         adicionarNumeroNegativo();
+    else if (ultimo === '*')         adicionarOperacao('multiplicacao');
+    else if (ultimo === '/')         adicionarOperacao('divisao');
+    else if (ultimo === '^')         adicionarOperacao('potenciacao');
+    else if (ultimo === '(')         adicionarParentese('(');
+    else if (ultimo === ')')         adicionarParentese(')');
+    else if (ultimo === '=' || ultimo === '\n') calcular();
+
+    this.value = ''; // limpa o campo para aceitar o próximo caractere
 });
