@@ -46,10 +46,6 @@ Omni Calculator is a two-in-one web tool that combines a scientific calculator w
 ```
 Omni-Calculator/
 ├── 📂 assets/
-│   ├── dark-space.jpg
-│   ├── icon.png
-│   ├── github.svg
-│   └── linkedin.svg
 ├── 📂 scripts/
 │   ├── calculator.js
 │   └── converter.js
