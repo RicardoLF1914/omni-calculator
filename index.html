@@ -55,6 +55,8 @@
     <footer>
         <p>&copy; Ricardo Linhares</p>
 
+        <button id="btn-historico">Histórico</button>
+
         <div class="footer-links">
             <a href="https://github.com/RicardoLF1914">
                 <img src="./assets/github.svg" alt="github logo">
@@ -65,6 +67,19 @@
             </a>
         </div>
     </footer>
+
+    <div id="modal-historico" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Histórico</h2>
+                <button id="fechar-modal">✕</button>
+            </div>
+            <ul id="lista-historico">
+                <li class="historico-vazio">Nenhuma operação realizada ainda.</li>
+            </ul>
+            <button id="limpar-historico">Limpar histórico</button>
+        </div>
+    </div>
 
     <script src="calculator.js"></script>
 </body>

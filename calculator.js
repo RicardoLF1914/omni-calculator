@@ -1,6 +1,7 @@
 let expressao = '0';
 let numeroAtual = '0';
 let novoNumero = false;
+let historico = [];
 
 const operadores = {
     'adicao': '+',
@@ -241,14 +242,20 @@ function avaliarExpressao(expr) {
 }
 
 function calcular() {
+    const expressaoAntes = expressao;
     const resultado = avaliarExpressao(expressao);
-    
+
     if (resultado === null || isNaN(resultado)) {
         alert("Expressão inválida!");
         return;
     }
-    
-    expressao = parseFloat(resultado.toFixed(10)).toString();
+
+    const resultadoFinal = parseFloat(resultado.toFixed(10));
+
+    // Registra no histórico
+    historico.push(`${expressaoAntes} = ${resultadoFinal}`);
+
+    expressao = resultadoFinal.toString();
     numeroAtual = expressao;
     novoNumero = true;
     atualizarDisplay();
@@ -392,4 +399,37 @@ document.addEventListener('keydown', function(event) {
     else if (key.toLowerCase() === 'c' || key === 'Escape') {
         limpar();
     }
+});
+
+// Event listeners do modal de histórico
+const modal = document.getElementById('modal-historico');
+const listaHistorico = document.getElementById('lista-historico');
+
+document.getElementById('btn-historico').addEventListener('click', function () {
+    listaHistorico.innerHTML = '';
+
+    if (historico.length === 0) {
+        listaHistorico.innerHTML = '<li class="historico-vazio">Nenhuma operação realizada ainda.</li>';
+    } else {
+        historico.slice().reverse().forEach(entrada => {
+            const li = document.createElement('li');
+            li.textContent = entrada;
+            listaHistorico.appendChild(li);
+        });
+    }
+
+    modal.classList.add('aberto');
+});
+
+document.getElementById('fechar-modal').addEventListener('click', function () {
+    modal.classList.remove('aberto');
+});
+
+document.getElementById('limpar-historico').addEventListener('click', function () {
+    historico = [];
+    listaHistorico.innerHTML = '<li class="historico-vazio">Nenhuma operação realizada ainda.</li>';
+});
+
+modal.addEventListener('click', function (e) {
+    if (e.target === modal) modal.classList.remove('aberto');
 });
